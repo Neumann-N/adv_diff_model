@@ -20,12 +20,12 @@ def redi_simple(lat,kappa,v,La,modelh,ntime,dt):
                 timestep*((kappa[2:]*La[2:]*Cold[2:]*(modelh[1:-1]+modelh[2:])/modelh[2:]/2
                            -kappa[2:]*La[2:]*Cold[1:-1]*(modelh[1:-1]+modelh[2:])/modelh[1:-1]/2- 
                            kappa[1:-1]*La[1:-1]*Cold[1:-1]*(modelh[1:-1]+modelh[0:-2])/modelh[1:-1]/2
-                           +kappa[1:-1]*La[1:-1]*Cold[0:-2]*(modelh[1:-1]+modelh[0:-2])/modelh[0:-2]/2)/dy**2
-                          -(v[2:]*(Cold[2:]+Cold[1:-1])/modelh[2:]-v[1:-1]*(Cold[1:-1]+Cold[0:-2])/modelh[1:-1])/dy/2
-                           -watl[1:]*Cold[1:-1]/modelh[1:-1]+kappav*La[1:-1]*(Cs[1:-1]-Cold[1:-1]/modelh[1:-1])/modelh[1:-1]))#
+                           +kappa[1:-1]*La[1:-1]*Cold[0:-2]*(modelh[1:-1]+modelh[0:-2])/modelh[0:-2]/2)/dy**2/La[1:-1]
+                          -(v[2:]*(Cold[2:]+Cold[1:-1])/modelh[2:]-v[1:-1]*(Cold[1:-1]+Cold[0:-2])/modelh[1:-1])/dy/2/La[1:-1]
+                           -watl[1:]*Cold[1:-1]/modelh[1:-1]/La[1:-1]+kappav*(Cs[1:-1]-Cold[1:-1]/modelh[1:-1])/modelh[1:-1]))#
         #Boundary conditions are set here. 
         Cnew[0]=0
-        Cnew[-1]=modelh[-1]*La[-1]
+        Cnew[-1]=modelh[-1]
         Cold=Cnew
         timeend=time-ntime+40000
         if timeend>=0:
