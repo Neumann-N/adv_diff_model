@@ -1,0 +1,18 @@
+name: adv_diff
+channels:
+  - conda-forge
+  - intake
+  - default
+dependencies:
+  - python
+  - numpy
+  - scipy
+  - pandas
+  - xarray
+  - matplotlib
+  - dask
+  - distributed
+  - ipykernel
+  - xmitgcm
+  - xgcm
+  - xlayers
