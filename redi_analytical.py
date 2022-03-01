@@ -31,6 +31,6 @@ def redi_simple(lat,kappa,v,La,modelh,ntime,dt):
         timeend=time-ntime+40000
         if timeend>=0:
             C[:,timeend]=Cnew
-    return C
+    return C, watl
 
 
