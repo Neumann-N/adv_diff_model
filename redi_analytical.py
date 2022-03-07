@@ -1,4 +1,4 @@
-def redi_simple(lat,kappa,v,La,modelh,ntime,dt):
+def redi_simple(lat,kappa,v,La,modelh,ntime,dt,Csouth,Cnorth):
     from scipy import signal
     import numpy as np
     ny=144
@@ -6,7 +6,7 @@ def redi_simple(lat,kappa,v,La,modelh,ntime,dt):
     Cnew=np.ones(ny)*3
     Cold=np.ones(ny)*3
     Cs=np.zeros(ny)
-    Cs[119:]=np.ones(25)
+    Cs[:]= 20*(((np.cos(np.pi*lat[:]/140))**2) + (0.1*np.exp(- (lat[:]/120-1)**2)))
 
     dy=108086
     #note that walt has units m/s because it is actually w
@@ -25,12 +25,12 @@ def redi_simple(lat,kappa,v,La,modelh,ntime,dt):
                           -(v[2:]*(Cold[2:]+Cold[1:-1])-v[1:-1]*(Cold[1:-1]+Cold[0:-2]))/dy/2/La[1:-1]/modelh[1:-1]
                            -watl[1:]*Cold[1:-1]/modelh[1:-1]+kappav*(Cs[1:-1]-Cold[1:-1])/modelh[1:-1]/modelh[1:-1]))#
         #Boundary conditions are set here. 
-        Cnew[0]=0
-        Cnew[-1]=1
+        Cnew[0]=Csouth
+        Cnew[-1]=Cnorth
         Cold=Cnew
         timeend=time-ntime+40000
         if timeend>=0:
             C[:,timeend]=Cnew
-    return C, watl
+    return C
 
 
